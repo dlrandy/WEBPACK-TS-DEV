@@ -1,0 +1,53 @@
+{
+  "name": "webpack-ts-dev",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "lint": "",
+    "build": "webpack --config ./webpack.config.prod.js",
+    "start": "webpack-dev-server --config ./webpack.config.dev.js "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dlrandy/WEBPACK-TS-DEV.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dlrandy/WEBPACK-TS-DEV/issues"
+  },
+  "homepage": "https://github.com/dlrandy/WEBPACK-TS-DEV#readme",
+  "devDependencies": {
+    "@types/node": "^10.12.21",
+    "@types/react": "^16.7.22",
+    "@types/react-dom": "^16.0.11",
+    "css-loader": "^2.1.0",
+    "file-loader": "^3.0.1",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^4.0.0-beta.5",
+    "postcss-flexbugs-fixes": "^4.1.0",
+    "postcss-loader": "^3.0.0",
+    "postcss-preset-env": "^6.5.0",
+    "react-axe": "^3.0.2",
+    "style-loader": "^0.23.1",
+    "stylelint": "^9.10.1",
+    "stylelint-config-recommended": "^2.1.0",
+    "stylelint-webpack-plugin": "^0.10.5",
+    "ts-loader": "^5.3.3",
+    "tslint": "^5.12.1",
+    "tslint-config-prettier": "^1.17.0",
+    "tslint-react": "^3.6.0",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.29.0",
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.14"
+  },
+  "dependencies": {
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "typescript": "^3.3.1"
+  }
+}
