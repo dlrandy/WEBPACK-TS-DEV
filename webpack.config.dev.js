@@ -1,9 +1,10 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const webpack = require("webpack");
-const StyleLintPlugin = require('stylelint-webpack-plugin');
-
-const ReplaceTextWebpackPlugin = require('./lib/webpack-replace-text-plugin');
+const StyleLintPlugin = require("stylelint-webpack-plugin");
+const ForkTsCheckerNotifierWebpackPlugin = require("fork-ts-checker-notifier-webpack-plugin");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const ReplaceTextWebpackPlugin = require("./lib/webpack-replace-text-plugin");
 const { getEntryJsHtmlPrj } = require("./utils/helpers");
 const [entryJsPath, htmlTemplatePath] = getEntryJsHtmlPrj();
 module.exports = {
@@ -30,7 +31,7 @@ module.exports = {
             loader: "ts-loader",
             options: {
               transpileOnly: true,
-              experimentalWatchApi: true
+              happyPackMode: true
             }
           }
         ],
@@ -64,6 +65,9 @@ module.exports = {
                 })
               ]
             }
+          },
+          {
+            loader: "sass-loader"
           }
         ]
       },
@@ -87,7 +91,9 @@ module.exports = {
   },
   devServer: {
     contentBase: "./",
-    historyApiFallback: true,
+    historyApiFallback: {
+      disableDotRule: true,
+    },
     hot: true,
     inline: true,
     open: "chrome",
@@ -103,17 +109,35 @@ module.exports = {
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("development")
     }),
+    new ForkTsCheckerWebpackPlugin({
+      tslint: './tslint.json',
+      useTypescriptIncrementalApi: true,
+      async: false,
+      checkSyntacticErrors: true,
+      reportFiles: [
+        'src/**/*.{ts,tsx}',
+        '!**/*.json',
+        '!**/__tests__/**',
+        '!**/?(*.)(spec|test).*',
+        '!**/src/setupProxy.*',
+        '!**/src/setupTests.*',
+      ],
+    }),
+    new ForkTsCheckerNotifierWebpackPlugin({
+      title: "TypeScript",
+      excludeWarnings: false
+    }),
     new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en|zh/),
     new StyleLintPlugin({
-      configFile: './stylelint.config.js',
-      files: './src/**/*.css'
+      configFile: "./stylelint.config.js",
+      files: "./src/**/*.css"
     }),
     new HtmlWebpackPlugin({
       template: htmlTemplatePath,
       title: "developing",
       inject: true
     }),
-    new ReplaceTextWebpackPlugin({ title: 'JJJ' }),
+    new ReplaceTextWebpackPlugin({ title: "JJJ" }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin()
   ],
